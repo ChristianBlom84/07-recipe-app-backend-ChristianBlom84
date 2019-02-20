@@ -18,10 +18,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@authenticate');
+Route::post('login', 'UserController@login');
 Route::get('open', 'DataController@open');
 
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('user', 'UserController@getAuthenticatedUser');
     Route::get('closed', 'DataController@closed');
+    
+    Route::get('recipe_lists', 'RecipeListsController@getListsForUser');
+    Route::get('recipe_lists/{id}', 'RecipeListsController@getList');
+    Route::put('recipe_lists/{id}', 'RecipeListsController@updateListName');
+    Route::post('recipe_lists', 'RecipeListsController@createList');
 });
