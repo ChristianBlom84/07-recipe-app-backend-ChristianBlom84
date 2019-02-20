@@ -47,8 +47,12 @@ class RecipeListsController extends Controller
         return response()->json(['created_list', $newList]);
     }
 
-    public function updateListName($id, Request $request)
+    public function updateListName(Request $request, $id)
     {
-        return $request;
+        $input = $request->all();
+        $list = RecipeList::find($id);
+        $list->update(['title' => $request->get('title')]);
+
+        return response()->json(['updated_list', $list]);
     }
 }
