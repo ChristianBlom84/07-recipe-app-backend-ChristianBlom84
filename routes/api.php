@@ -18,10 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('register', 'UserController@register');
-Route::post('login', 'UserController@login');
+Route::post('login', 'UserController@login')->middleware('cors');
 Route::get('open', 'DataController@open');
 
-Route::group(['middleware' => ['jwt.verify']], function () {
+Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     Route::get('user', 'UserController@getAuthenticatedUser');
     Route::get('closed', 'DataController@closed');
     
@@ -29,4 +29,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('recipe_lists/{id}', 'RecipeListsController@getList');
     Route::put('recipe_lists/{id}', 'RecipeListsController@updateListName');
     Route::post('recipe_lists', 'RecipeListsController@createList');
+    Route::delete('recipe_lists/{id}', 'RecipeListsController@deleteList');
+
+    Route::post('recipe_lists/{id}', 'RecipeController@addRecipeToList');
 });

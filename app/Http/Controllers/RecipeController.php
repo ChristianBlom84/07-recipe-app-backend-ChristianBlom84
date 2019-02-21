@@ -11,8 +11,18 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class RecipeController extends Controller
 {
-    public function addRecipeToList(Request $request)
+    public function addRecipeToList(Request $request, $id)
     {
-        # code...
+        $recipe_id = $request->get('recipe_id');
+        $recipe_name = $request->get('recipe_name');
+        $user = JWTAuth::user();
+
+        $addedRecipe = Recipe::create([
+            'recipe_list_id' => $id,
+            'recipe_id' => $recipe_id,
+            'recipe_name' => $recipe_name
+        ]);
+
+        return response()->json(['added_recipe', $addedRecipe]);
     }
 }

@@ -55,4 +55,16 @@ class RecipeListsController extends Controller
 
         return response()->json(['updated_list', $list]);
     }
+
+    public function deleteList(Request $request, $id)
+    {
+        $list = RecipeList::find($id);
+
+        if (JWTAuth::user()->id === $list->user_id) {
+            $list->delete();
+            return response()->json(['deleted_list', $list]);
+        } else {
+            return response()->json(['status' => 'Unauthorized'], 401);
+        }
+    }
 }
