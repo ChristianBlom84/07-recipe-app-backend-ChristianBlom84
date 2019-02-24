@@ -30,6 +30,8 @@ Route::group(['middleware' => ['jwt.verify', 'cors']], function () {
     
     Route::get('recipe_lists/{id}', 'RecipeListsController@getList');
     Route::put('recipe_lists/{id}', 'RecipeListsController@updateListName');
-    Route::delete('recipe_lists/{id}', 'RecipeListsController@deleteList');
     Route::post('recipe_lists/{id}', 'RecipeController@addRecipeToList');
+    Route::delete('recipe_lists/{id}', 'RecipeListsController@deleteList');
+
+    Route::delete('recipe_lists/{listId}/{recipeId}', 'RecipeController@deleteRecipeFromList');
 });
