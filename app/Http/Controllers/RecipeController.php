@@ -30,7 +30,7 @@ class RecipeController extends Controller
     {
         $user = JWTAuth::user();
 
-        $deletedRecipe = Recipe::where('recipe_id', $recipeId)->where('recipe_list_id', $listId);
+        $deletedRecipe = Recipe::where('recipe_id', $recipeId)->where('recipe_list_id', $listId)->first();
         $recipeList = RecipeList::find($listId);
 
         if ($recipeList->user_id == $user->id) {
